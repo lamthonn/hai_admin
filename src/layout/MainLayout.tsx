@@ -134,7 +134,7 @@ const MainLayout: React.FC<{children?: React.ReactNode, label?:string }> = ({
             borderTop: "1px solid var(--color-primary-2)"
           }}
         >
-          G-connect seller center ©{new Date().getFullYear()} Created by Vũ Vương Lâm
+          Shoes seller center ©{new Date().getFullYear()} Created by Vũ Vương Lâm
         </Footer>
       </Layout>
     </Layout>
