@@ -8,12 +8,15 @@ import {
 import { PageContainer, ProCard, ProLayout } from '@ant-design/pro-components';
 import { ProConfigProvider } from '@ant-design/pro-provider';
 import { Button, Input } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import defaultProps from './defaultProps';
 import { menuItem } from '../config';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { routesConfig } from '../routes/routes';
-
+import { jwtDecode, JwtPayload } from 'jwt-decode';
+interface CustomJwtPayload extends JwtPayload {
+  ten?: string; // hoặc number nếu `dvvc_id` là số
+}
 const MainLayout:React.FC<{
   label?: string;
   children?: React.ReactNode;
@@ -23,6 +26,15 @@ const MainLayout:React.FC<{
 }) => {
   const [pathname, setPathname] = useState('');
   const navigate = useNavigate();
+  const location = useLocation(); // Lấy thông tin route hiện tại
+  const authValue = localStorage.getItem("auth");
+  const [auth, setAuth] = useState<CustomJwtPayload>();
+  useEffect(()=> {
+    if (authValue) {
+          const decoded = jwtDecode(authValue);
+          setAuth(decoded);
+        }
+  },[])
 
   return (
     <ProConfigProvider>
@@ -35,7 +47,7 @@ const MainLayout:React.FC<{
         avatarProps={{
           src: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
           size: 'small',
-          title: 'User',
+          title: "Administrator",
         }}
         actionsRender={(props) => {
           if (props.isMobile) return [];
@@ -122,6 +134,15 @@ const MainLayout:React.FC<{
             {dom}
           </a>
         )}
+
+        // menuFooterRender={(props) => {
+        //   return <div style={{ display: 'flex', gap:8 }}>
+        //     <Button type="primary" style={{ width: '100%' }} onClick={() => {
+        //       navigate("/seller-center/login");}}>
+        //     Đăng nhập
+        //   </Button>
+        //   </div>
+        // }}
       >
         <PageContainer
           footer={[

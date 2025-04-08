@@ -1,5 +1,6 @@
 import {
   Divider,
+  Empty,
   Form,
   Modal,
   Pagination,
@@ -557,6 +558,10 @@ const TableCustom: React.FC<TableCustomProps> = ({
           rowKey={(record) => record[`${rowKey}`]}
           pagination={false}
           rowSelection={isCheckable ? rowSelection : undefined}
+          locale={{
+
+            emptyText: <><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={"Không có dữ liệu"}/></>, // Thông báo khi không có dữ liệu
+          }}
           footer={() => (
             <Pagination
               onShowSizeChange={onShowSizeChange}
@@ -566,6 +571,15 @@ const TableCustom: React.FC<TableCustomProps> = ({
               total={totalRecord}
               pageSize={pageSize}
               showSizeChanger
+              pageSizeOptions={["10", "20", "50", "100"]}
+              locale={{
+                items_per_page: " bản ghi/trang",
+                jump_to: "Tới",
+                jump_to_confirm: "Xác nhận",
+                page: "Trang",
+                prev_page: "Trang trước",
+                next_page: "Trang sau",
+              }}
             />
           )}
         />
