@@ -49,40 +49,40 @@ export const menuItem :MenuProps["items"] = [
       icon: React.createElement(ControlOutlined), 
       label: "Vận hành",
       children: [
-        {
-          key: "nhap-kho",
-          label: "Nhập kho",
-        },
+        // {
+        //   key: "nhap-kho",
+        //   label: "Nhập kho",
+        // },
         {
           key: "don-hang",
           label: "Đơn hàng",
         },
       ],
     },
-    {
-      key: "marketing",
-      icon: React.createElement(NotificationOutlined), 
-      label: "Marketing",
-      children: [
-        {
-          key: "ma-giam-gia",
-          label: "Quản lý mã giảm giá",
-        },
-        {
-          key: "chuong-trinh-marketing",
-          label: "Chương trình marketing",
-        },
-        {
-          key: "quang-cao",
-          label: "Quảng cáo",
-        },
-      ],
-    },
-    {
-      key: "don-vi-van-chuyen",
-      icon: React.createElement(CarOutlined), 
-      label: "Đơn vị vận chuyển",
-    },
+    // {
+    //   key: "marketing",
+    //   icon: React.createElement(NotificationOutlined), 
+    //   label: "Marketing",
+    //   children: [
+    //     {
+    //       key: "ma-giam-gia",
+    //       label: "Quản lý mã giảm giá",
+    //     },
+    //     {
+    //       key: "chuong-trinh-marketing",
+    //       label: "Chương trình marketing",
+    //     },
+    //     {
+    //       key: "quang-cao",
+    //       label: "Quảng cáo",
+    //     },
+    //   ],
+    // },
+    // {
+    //   key: "don-vi-van-chuyen",
+    //   icon: React.createElement(CarOutlined), 
+    //   label: "Đơn vị vận chuyển",
+    // },
     {
       key: "tai-chinh",
       icon: React.createElement(DollarOutlined), 
