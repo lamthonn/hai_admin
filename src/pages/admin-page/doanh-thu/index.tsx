@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Col, Row, Statistic, Tabs, message } from 'antd';
+import { Card, Col, Row, Statistic, Tabs, message, Typography } from 'antd';
 import { Line, Pie, Bar } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -17,9 +17,9 @@ import dayjs, { Dayjs } from 'dayjs';
 import DatePickerCustomOld from '../../../components/datepicker/DatePickerCustomOld';
 import MainLayout from '../../../layout/MainLayout';
 import { GetRevenueStats } from '../../../services/DoanhThuServices';
-import ShowToast from '../../../components/show-toast/ShowToast';
 import { RangePickerProps } from 'antd/es/date-picker';
-// import { GetRevenueStats } from '../services/AuthenServices';
+
+const { Title: AntTitle } = Typography;
 
 ChartJS.register(
     CategoryScale,
@@ -68,50 +68,47 @@ const RevenueStats: React.FC = () => {
         }
     }, [dateRange]);
 
-    // Biểu đồ doanh thu theo ngày (Line Chart)
     const lineChartDataByDate = {
-        labels: stats?.revenueByDate.map(item => dayjs(item.date, 'DD/MM/YYYY').format('DD/MM/YYYY')) || [],
+        labels: stats?.revenueByDate.map(item => dayjs(item.date).format('DD/MM')) || [],
         datasets: [
             {
                 label: 'Doanh thu (VND)',
                 data: stats?.revenueByDate.map(item => item.revenue) || [],
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: '#1890ff',
+                backgroundColor: 'rgba(24, 144, 255, 0.2)',
                 fill: true,
+                tension: 0.4
             }
         ]
     };
-    
 
-    // Biểu đồ doanh thu theo tháng (Line Chart)
     const lineChartDataByMonth = {
         labels: stats?.revenueByMonth.map(item => item.month) || [],
         datasets: [
             {
                 label: 'Doanh thu (VND)',
                 data: stats?.revenueByMonth.map(item => item.revenue) || [],
-                borderColor: 'rgba(54, 162, 235, 1)',
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: '#13c2c2',
+                backgroundColor: 'rgba(19, 194, 194, 0.2)',
                 fill: true,
+                tension: 0.4
             }
         ]
     };
 
-    // Biểu đồ doanh thu theo đơn hàng (Bar Chart)
     const barChartDataByOrder = {
         labels: stats?.revenueByOrder.map(item => item.orderId) || [],
         datasets: [
             {
                 label: 'Doanh thu theo đơn hàng (VND)',
                 data: stats?.revenueByOrder.map(item => item.revenue) || [],
-                backgroundColor: 'rgba(255, 159, 64, 0.6)',
-                borderColor: 'rgba(255, 159, 64, 1)',
-                borderWidth: 1,
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
             }
         ]
     };
 
-    // Biểu đồ doanh thu theo sản phẩm (Pie Chart)
     const pieChartDataByProduct = {
         labels: stats?.revenueByProduct.map(item => item.productName) || [],
         datasets: [
@@ -119,85 +116,74 @@ const RevenueStats: React.FC = () => {
                 label: 'Doanh thu theo sản phẩm',
                 data: stats?.revenueByProduct.map(item => item.revenue) || [],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.6)',
-                    'rgba(54, 162, 235, 0.6)',
-                    'rgba(255, 206, 86, 0.6)',
-                    'rgba(75, 192, 192, 0.6)',
-                    'rgba(153, 102, 255, 0.6)',
+                    '#1890ff',
+                    '#52c41a',
+                    '#faad14',
+                    '#eb2f96',
+                    '#722ed1'
                 ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                ],
-                borderWidth: 1,
+                borderWidth: 1
             }
         ]
     };
 
-    
-    const onDateRangeChange: RangePickerProps["onChange"] = (dates, dateStrings) => {
+    const onDateRangeChange: RangePickerProps["onChange"] = (dates) => {
         if (dates && dates.length === 2) {
-            setDateRange(dates as [Dayjs, Dayjs]); // Ép kiểu để chắc chắn là [Dayjs, Dayjs]
+            setDateRange(dates as [Dayjs, Dayjs]);
         } else {
             setDateRange([dayjs().startOf("month"), dayjs()]);
         }
     };
-    
-    
 
     return (
         <MainLayout label="Doanh thu">
-            <div style={{ padding: '20px' }}>
-                <h2>Thống kê doanh thu</h2>
-                <Row gutter={[16, 16]}>
-                    <Col span={24}>
+            <div style={{ padding: 24 }}>
+                <AntTitle level={3}>Báo cáo thống kê doanh thu</AntTitle>
+                <Row gutter={[16, 24]} align="middle">
+                    <Col xs={24} sm={12} md={8} lg={6}>
                         <DatePickerCustomOld
-                            mode='range'
+                            mode="range"
                             value={dateRange}
                             format="DD/MM/YYYY"
-                            style={{ marginBottom: '20px' }}
+                            style={{ width: '100%' }}
                             onChange={onDateRangeChange}
                         />
                     </Col>
-                    <Col span={8}>
-                        <Card>
+                    <Col xs={24} sm={12} md={16} lg={18}>
+                        <Card style={{ textAlign: 'center' }}>
                             <Statistic
                                 title="Tổng doanh thu"
                                 value={stats?.totalRevenue || 0}
                                 precision={0}
                                 suffix="VND"
-                                valueStyle={{ color: '#3f8600' }}
+                                valueStyle={{ color: '#3f8600', fontSize: 24 }}
                             />
                         </Card>
                     </Col>
-                    <Col span={16}>
-                        <Tabs defaultActiveKey="1">
-                            <Tabs.TabPane tab="Theo ngày" key="1">
-                                <Card title="Doanh thu theo ngày">
-                                    <Line data={lineChartDataByDate} options={{ responsive: true }} />
-                                </Card>
-                            </Tabs.TabPane>
-                            <Tabs.TabPane tab="Theo tháng" key="2">
-                                <Card title="Doanh thu theo tháng">
-                                    <Line data={lineChartDataByMonth} options={{ responsive: true }} />
-                                </Card>
-                            </Tabs.TabPane>
-                            <Tabs.TabPane tab="Theo đơn hàng" key="3">
-                                <Card title="Doanh thu theo đơn hàng">
-                                    <Bar data={barChartDataByOrder} options={{ responsive: true }} />
-                                </Card>
-                            </Tabs.TabPane>
-                            <Tabs.TabPane tab="Theo sản phẩm" key="4">
-                                <Card title="Doanh thu theo sản phẩm">
-                                    <Pie data={pieChartDataByProduct} options={{ responsive: true }} />
-                                </Card>
-                            </Tabs.TabPane>
-                        </Tabs>
-                    </Col>
                 </Row>
+
+                <Tabs defaultActiveKey="1" style={{ marginTop: 24 }}>
+                    <Tabs.TabPane tab="Theo ngày" key="1">
+                        <Card title="Biểu đồ doanh thu theo ngày">
+                            <Line data={lineChartDataByDate} options={{ responsive: true }} />
+                        </Card>
+                    </Tabs.TabPane>
+                    <Tabs.TabPane tab="Theo tháng" key="2">
+                        <Card title="Biểu đồ doanh thu theo tháng">
+                            <Line data={lineChartDataByMonth} options={{ responsive: true }} />
+                        </Card>
+                    </Tabs.TabPane>
+                    <Tabs.TabPane tab="Theo đơn hàng" key="3">
+                        <Card title="Biểu đồ doanh thu theo đơn hàng">
+                            <Bar data={barChartDataByOrder} options={{ responsive: true }} />
+                        </Card>
+                    </Tabs.TabPane>
+                    <Tabs.TabPane tab="Theo sản phẩm" key="4">
+                        <Card title="Biểu đồ doanh thu theo sản phẩm">
+                            <Pie data={pieChartDataByProduct} options={{ responsive: true }} />
+                        </Card>
+                    </Tabs.TabPane>
+                </Tabs>
             </div>
         </MainLayout>
     );
