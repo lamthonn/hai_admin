@@ -4,15 +4,18 @@
     font-size: 16px;
 }
 .ant-menu-item,
-.ant-menu{
-    background-color: var(--color-primary-9) !important;
+.ant-menu,
+.ant-layout-sider-children{
+    background-color: var(--color-primary-2) !important;
 }
 
-.ant-tabs-nav-wrap{
+
+.ant-tabs-nav-wrap {
     border-bottom: 1px solid  var(--color-primary-6) !important;
 }
 
-.ant-tabs-card .ant-tabs-tab {
+.ant-tabs-card 
+.ant-tabs-tab {
     margin-right: 16px !important; /* Điều chỉnh khoảng cách giữa các tab */
     border-color: var(--color-primary-6) !important;
 
@@ -30,12 +33,22 @@
 
 .ant-menu-item:hover,
 .ant-menu-submenu-title:hover{
-    background-color: var(--color-primary-10) !important;
+    background-color: var(--color-primary-9) !important;
+    color: white !important;
+}
+
+.ant-pro-sider-logo{
+    h1{
+        display: none !important; 
+    }
 }
 
 .ant-menu-submenu-selected{
-    .ant-menu-submenu-title{
+    .ant-menu-submenu-title:hover{
         color: white !important;
+    }
+    .ant-menu-submenu-title{
+        color: var(--color-primary-9) !important;
     }
 }
 
@@ -44,13 +57,15 @@
 }
 
 .ant-layout{
-    margin-inline-start: 130px !important;
+    // margin-inline-start: 130px !important;
+    overflow-x: hidden;
+
 }
 
-.ant-layout-sider{
-    max-width: 255px !important;
-    width: 255px !important;
-}
+// .ant-layout-sider{
+//     max-width: 255px !important;
+//     width: 255px !important;
+// }
 
 .ant-divider-horizontal{
     margin: 16px 0 !important;
